@@ -31,4 +31,5 @@ jobs:
         run: exit 1
 
       - name: Build project
-        run: npm run dev
+        run: npm run build
+
