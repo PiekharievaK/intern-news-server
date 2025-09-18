@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"tsc -w\" \"nodemon\"",
     "build": "tsc",
-    "start": "node build",
     "lint": "biome lint --errors",
     "format": "biome format --write",
     "check": "biome format"
