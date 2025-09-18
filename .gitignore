@@ -1,0 +1,64 @@
+# Node.js
+node_modules/
+
+# npm log files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# PM2 
+pids/
+*.pid
+*.seed
+pm2-log/
+
+# Typescript
+*.tsbuildinfo
+
+# dotenv environment variables file
+.env
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDE/Editor specific
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# log files
+logs/
+*.log
+
+# Build directories
+build/
+dist/
+
+# Optional npm cache directory
+.npm/
+
+# Parcel-bundler cache
+.cache/
+
+# Next.js build output
+.next/
+
+# Nuxt.js build output
+.nuxt/
+
+# Serverless deployment directories
+.serverless/
+
+# VS Code settings
+.vscode/
+
+# JetBrains
+.idea/
+
+# Temporary files
+*.swp
+*.swo
