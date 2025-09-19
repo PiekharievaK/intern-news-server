@@ -1,8 +1,4 @@
 # intern-news-server
-Sure! Here’s a concise README snippet in English:
-
-```markdown
-# intern-news-server
 
 ## Setup and Run
 
