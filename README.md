@@ -9,7 +9,7 @@
 PORT=3000
 HOST=0.0.0.0
 DATABASE_URL="mongodb://localhost:27017/news?replicaSet=rs0"
-DEFAULT_FEED_URL="[https://feeds.bbci.co.uk/news/world/rss.xml](https://feeds.bbci.co.uk/news/world/rss.xml)"
+DEFAULT_FEED_URL="https://feeds.bbci.co.uk/news/world/rss.xml"
 
 ````
 3. Install dependencies:
