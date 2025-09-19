@@ -28,10 +28,6 @@ async function buildApp(options: AppOptions = {}) {
 		throw error;
 	}
 
-	fastify.get("/", async (request, reply) => {
-		return { hello: "world" };
-	});
-
 	fastify.register(getFeedDataRoutes);
 
 	return fastify;
