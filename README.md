@@ -25,5 +25,5 @@ npm install
 
    This command will start MongoDB via Docker, initialize the database, and launch the server.
 
-You can then test the API at [http://localhost:3000/feed](http://localhost:3000/feed) using a browser or Postman.
+You can then test the API at "http://localhost:3000/feed" using a browser or Postman.
 
