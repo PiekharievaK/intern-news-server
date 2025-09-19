@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-	const items = await prisma.newsItem.findMany();
+	const items = await prisma.newsPreview.findMany();
 	console.log("News Items:", items);
 }
 

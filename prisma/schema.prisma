@@ -7,14 +7,26 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model NewsItem {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  image     String?  
-  pubDate   DateTime?
-  sourceUrl     String   
-  newsUrl       String   @unique
-  shortContent  String?
-  fullContent   String?
-  createdAt DateTime @default(now())
+
+
+model  NewsPreview {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  image       String
+  newsUrl     String   @unique
+  sourceUrl   String
+  content     String
+  updatedAt   DateTime @updatedAt
+}
+
+model NewsFull {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  image       String  
+  pubDate     DateTime?
+  sourceUrl   String   
+  newsUrl     String   @unique
+  content     String
+  previewId   String
+  createdAt   DateTime @default(now())
 }
