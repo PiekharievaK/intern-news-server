@@ -3,10 +3,10 @@ import type { FastifyInstance } from "fastify";
 import { schema } from "../schemas/feedData.schema";
 import { getFeedHandler } from "../utils/feed.controller";
 
-export async function getFeedDataRoutes(fastify: FastifyInstance) {
+export default async function getFeedDataRoutes(fastify: FastifyInstance) {
 	const route = fastify.withTypeProvider<JsonSchemaToTsProvider>();
 
-	route.get("/feed", { schema }, async (request, reply) => {
-		return getFeedHandler(fastify, request, reply);
-	});
+	route.get("/", { schema }, async (request, reply) =>
+		getFeedHandler(fastify, request, reply),
+	);
 }

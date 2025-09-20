@@ -23,7 +23,7 @@ npm install
    npm run start:dev
    ```
 
-   This command will start MongoDB via Docker, initialize the database, and launch the server.
+   This command will start MongoDB via Docker and launch the server.
 
-You can then test the API at "http://localhost:3000/feed" using a browser or Postman.
+You can then test the API at "http://localhost:3000/news" using a browser or Postman.
 

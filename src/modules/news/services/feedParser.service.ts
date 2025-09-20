@@ -2,7 +2,7 @@ import Parser from "rss-parser";
 
 export interface ParsedNewsItem {
 	title: string;
-	image: string;
+	image?: string;
 	pubDate?: string;
 	sourceUrl: string;
 	newsUrl: string;
@@ -17,11 +17,11 @@ export const parseFeed = async (url: string): Promise<ParsedNewsItem[]> => {
 
 		return (feed.items || []).map((item) => ({
 			title: item.title || "",
-			image:
+			image:			    
 				item.enclosure?.url ||
 				item.mediaContent?.url ||
-				item.mediaThumbnail?.url ||
-				"https://i.ibb.co/hXCwYmK/4054617.png",
+				item.mediaThumbnail?.url||
+				feed.image?.url,
 			pubDate: item.pubDate ? new Date(item.pubDate).toISOString() : undefined,
 			sourceUrl: url,
 			newsUrl: item.link || "",

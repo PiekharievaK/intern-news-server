@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"tsc -w\" \"nodemon\"",
     "build": "tsc",
-    "start:dev": "docker-compose up -d mongodb && ts-node ./mongo-init/config.ts &&  npm run dev",
+    "start:dev": "docker-compose up -d mongodb &&  npm run dev",
     "lint": "biome lint",
     "format": "biome format --write",
     "check": "biome format"
@@ -19,7 +19,6 @@
     "@fastify/sensible": "^6.0.3",
     "@fastify/type-provider-json-schema-to-ts": "^5.0.0",
     "@prisma/client": "^6.16.2",
-    "@sinclair/typebox": "^0.34.41",
     "fastify": "^5.6.0",
     "fastify-plugin": "^5.0.1",
     "json-schema-to-ts": "^3.1.1",

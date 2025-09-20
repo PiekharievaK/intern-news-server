@@ -1,9 +1,5 @@
 import type { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
 import { parseFeed } from "../services/feedParser.service";
-import dotenv from "dotenv";
-dotenv.config();
-
-const DEFAULT_URL = process.env.DEFAULT_FEED_URL || "https://feeds.bbci.co.uk/sport/rss.xml";
 
 export const getFeedHandler = async (
 	fastify: FastifyInstance,
@@ -11,7 +7,7 @@ export const getFeedHandler = async (
 	reply: FastifyReply,
 ) => {
 	const query = request.query as { url?: string; force?: string };
-	const url = query.url ?? DEFAULT_URL;
+	const url = query.url ?? fastify.config.DEFAULT_FEED_URL;
 	const force = query.force === "1";
 
 	try {
