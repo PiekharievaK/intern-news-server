@@ -5,19 +5,15 @@ const pluginName = "prisma-plugin";
 
 export default fp(
 	async (fastify) => {
-		try {
-			const prisma = new PrismaClient();
+		const prisma = new PrismaClient();
 
-			fastify.decorate("prisma", prisma);
+		fastify.decorate("prisma", prisma);
 
-			fastify.addHook("onClose", async () => {
-				await prisma.$disconnect();
-			});
+		fastify.addHook("onClose", async () => {
+			await prisma.$disconnect();
+		});
 
-			fastify.pluginLoaded(pluginName);
-		} catch (error) {
-			fastify.pluginError(pluginName, error);
-		}
+		fastify.pluginLoaded(pluginName);
 	},
 	{
 		name: pluginName,
