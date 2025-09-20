@@ -1,0 +1,32 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+
+model  NewsPreview {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  image       String
+  newsUrl     String   @unique
+  sourceUrl   String
+  content     String
+  updatedAt   DateTime @updatedAt
+}
+
+model NewsFull {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  image       String  
+  pubDate     DateTime?
+  sourceUrl   String   
+  newsUrl     String   @unique
+  content     String
+  previewId   String
+  createdAt   DateTime @default(now())
+}
