@@ -4,6 +4,6 @@ declare module "fastify" {
 	interface FastifyInstance {
 		config: Config;
 		pluginLoaded: (pluginName: string) => void;
-		routeLoaded: (pluginName: string) => void;
+		pluginError: (pluginName: string, error: any) => void;
 	}
 }

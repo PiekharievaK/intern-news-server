@@ -9,11 +9,15 @@ async function buildApp(options: AppOptions = {}) {
 	const fastify = Fastify({ logger: true });
 	await fastify.register(configPlugin);
 
-	try {
-		fastify.decorate("pluginLoaded", (pluginName: string) => {
-			fastify.log.info(`✔️ Plugin loaded: ${pluginName}`);
-		});
+	fastify.decorate("pluginLoaded", (pluginName: string) => {
+		fastify.log.info(`✔️ Loaded: ${pluginName}`);
+	});
+	fastify.decorate("pluginError", (pluginName: string, error) => {
+		fastify.log.error(`❌ Plugin error: ${pluginName}`);
+		fastify.log.error(error);
+	});
 
+	try {
 		fastify.log.info("🛠️  - Starting to load plugins");
 
 		await fastify.register(AutoLoad, {
@@ -29,10 +33,6 @@ async function buildApp(options: AppOptions = {}) {
 	}
 
 	try {
-		fastify.decorate("routeLoaded", (routeName: string) => {
-			fastify.log.info(`✔️ Route loaded: ${routeName}`);
-		});
-
 		fastify.log.info("🔀 - Starting to load routes");
 
 		await fastify.register(AutoLoad, {
