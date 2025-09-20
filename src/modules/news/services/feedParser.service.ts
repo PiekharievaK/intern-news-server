@@ -17,10 +17,10 @@ export const parseFeed = async (url: string): Promise<ParsedNewsItem[]> => {
 
 		return (feed.items || []).map((item) => ({
 			title: item.title || "",
-			image:			    
+			image:
 				item.enclosure?.url ||
 				item.mediaContent?.url ||
-				item.mediaThumbnail?.url||
+				item.mediaThumbnail?.url ||
 				feed.image?.url,
 			pubDate: item.pubDate ? new Date(item.pubDate).toISOString() : undefined,
 			sourceUrl: url,
