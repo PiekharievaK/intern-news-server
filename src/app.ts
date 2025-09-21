@@ -13,8 +13,7 @@ async function buildApp(options: AppOptions = {}) {
 		fastify.log.info(`✔️ Loaded: ${pluginName}`);
 	});
 	fastify.decorate("pluginError", (pluginName: string, error) => {
-		fastify.log.error(`❌ Plugin error: ${pluginName}`);
-		fastify.log.error(error);
+		fastify.log.error( error, `❌ Plugin error: ${pluginName}`);
 	});
 
 	try {
