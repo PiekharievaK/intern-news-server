@@ -30,3 +30,13 @@ model NewsFull {
   previewId   String
   createdAt   DateTime @default(now())
 }
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  login     String   @unique
+  password  String
+  token     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,3 +1,5 @@
+import { errorSchema } from "../../../types/errorSchema";
+
 export const schema = {
 	params: {
 		type: "object",
@@ -32,21 +34,7 @@ export const schema = {
 			],
 			additionalProperties: false,
 		},
-		404: {
-			type: "object",
-			properties: {
-				error: { type: "string" },
-			},
-			required: ["error"],
-			additionalProperties: false,
-		},
-		500: {
-			type: "object",
-			properties: {
-				error: { type: "string" },
-			},
-			required: ["error"],
-			additionalProperties: false,
-		},
+		400: errorSchema,
+		500: errorSchema,
 	},
 } as const;

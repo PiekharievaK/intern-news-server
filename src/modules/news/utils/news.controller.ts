@@ -1,4 +1,5 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { parsePage } from "../services/pageParser";
 
 export const newsController = async (
 	fastify: FastifyInstance,
@@ -11,21 +12,30 @@ export const newsController = async (
 		const preview = await fastify.prisma.newsPreview.findUnique({
 			where: { id },
 		});
+
 		if (!preview) {
-			return reply.status(404).send({ error: "Preview not found" });
+			return reply.notFound("Preview not found");
 		}
 
-		const full = await fastify.prisma.newsFull.findUnique({
-			where: { newsUrl: preview.newsUrl },
+		const parsed = await parsePage(preview.newsUrl, preview.sourceUrl);
+
+		if (!parsed) {
+			return reply.status(400).send({ error: "Unable to parse the news page" });
+		}
+
+		return reply.send({
+			id,
+			title: parsed.title,
+			image: parsed.image ?? "",
+			pubDate: parsed.pubDate ?? new Date().toISOString(),
+			sourceUrl: parsed.sourceUrl,
+			newsUrl: parsed.newsUrl,
+			content: parsed.content ?? "",
+			previewId: preview.id,
+			createdAt: new Date().toISOString(),
 		});
-
-		if (!full) {
-			console.log("Failed to parse full news");
-		}
-
-		return reply.send(full);
 	} catch (error) {
 		request.log.error(error);
-		return reply.status(500).send({ error: "Failed to fetch full news" });
+		return reply.internalServerError("Failed to load or parse news article");
 	}
 };
