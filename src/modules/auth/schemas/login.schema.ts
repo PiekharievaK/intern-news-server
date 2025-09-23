@@ -19,7 +19,7 @@ export const schema = {
 			required: ["login", "token"],
 			additionalProperties: false,
 		},
-		401: errorSchema,
+		400: errorSchema,
 		500: errorSchema,
 	},
 };

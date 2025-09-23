@@ -5,14 +5,13 @@ export const createUser = async (
 	prisma: PrismaClient,
 	email: string,
 	login: string,
-	token: string,
 	password: string,
 ) => {
 	const hashed = await hashPassword(password);
+
 	return prisma.user.create({
 		data: {
 			email,
-			token,
 			login,
 			password: hashed,
 		},
@@ -22,6 +21,12 @@ export const createUser = async (
 export const findUserByEmail = async (prisma: PrismaClient, email: string) => {
 	return prisma.user.findUnique({
 		where: { email },
+	});
+};
+
+export const findUserByLogin = async (prisma: PrismaClient, login: string) => {
+	return prisma.user.findUnique({
+		where: { login },
 	});
 };
 

@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import type { SignupBody } from "../types/auth";
-import { hashPassword } from "../services/password";
+import { createUser, findUserByEmail, findUserByLogin } from "../services/user";
 
 export async function signupController(
 	fastify: FastifyInstance,
@@ -10,36 +10,17 @@ export async function signupController(
 	const { email, password, login } = request.body;
 
 	try {
-		const existingUserByEmail = await fastify.prisma.user.findUnique({
-			where: { email },
-		});
+		const existingUserByEmail = await findUserByEmail(fastify.prisma, email);
+		const existingUserByLogin = await findUserByLogin(fastify.prisma, login);
 
-		if (existingUserByEmail) {
-			return reply.badRequest("Email already registered");
-		}
-
-		const existingUserByLogin = await fastify.prisma.user.findUnique({
-			where: { login },
-		});
-
-		if (existingUserByLogin) {
-			return reply.badRequest("Login already taken");
-		}
-
-		const hashedPassword = await hashPassword(password);
-
-		const user = await fastify.prisma.user.create({
-			data: {
-				email,
-				login,
-				password: hashedPassword,
-			},
-		});
+		fastify.assert(!existingUserByEmail, 400, "This email is already exist");
+		fastify.assert(!existingUserByLogin, 400, "Login already taken");
+		const user = await createUser(fastify.prisma, email, login, password);
 
 		return reply.send({ id: user.id, login: user.login });
 	} catch (error) {
 		request.log.error(error);
 
-		return reply.internalServerError("Internal Server Error");
+		return reply.internalServerError(error.message || "Internal Server Error");
 	}
 }

@@ -19,6 +19,6 @@ export async function logoutController(
 	} catch (error) {
 		request.log.error(error);
 
-		return reply.internalServerError("Internal Server Error");
+		return reply.internalServerError(error.message || "Internal Server Error");
 	}
 }
