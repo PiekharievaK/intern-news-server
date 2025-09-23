@@ -23,6 +23,8 @@ export const getFeedHandler = async (
 
 		const parsedItems = await parseFeed(url);
 
+		fastify.assert(parsedItems, 400, "Failed to parse feed");
+
 		for (const item of parsedItems) {
 			await fastify.prisma.newsPreview.upsert({
 				where: { newsUrl: item.newsUrl },
@@ -30,14 +32,14 @@ export const getFeedHandler = async (
 					title: item.title,
 					image: item.image ?? "",
 					content: item.content ?? "",
-					sourceUrl: url,
+					sourceUrl: item.sourceUrl,
 				},
 				create: {
 					title: item.title,
 					image: item.image ?? "",
 					newsUrl: item.newsUrl,
 					content: item.content ?? "",
-					sourceUrl: url,
+					sourceUrl: item.sourceUrl,
 				},
 			});
 		}
@@ -49,6 +51,6 @@ export const getFeedHandler = async (
 		return reply.send(allPreviews);
 	} catch (error) {
 		fastify.log.error(error);
-		return reply.status(500).send({ error: "Failed to fetch or save feed" });
+		return reply.internalServerError("Failed to fetch or save feed");
 	}
 };
