@@ -17,6 +17,7 @@
     "@fastify/autoload": "^6.3.1",
     "@fastify/env": "^5.0.2",
     "@fastify/jwt": "^10.0.0",
+    "@fastify/schedule": "^6.0.0",
     "@fastify/sensible": "^6.0.3",
     "@fastify/type-provider-json-schema-to-ts": "^5.0.0",
     "@prisma/client": "^6.16.2",
@@ -25,7 +26,8 @@
     "fastify": "^5.6.0",
     "fastify-plugin": "^5.0.1",
     "json-schema-to-ts": "^3.1.1",
-    "rss-parser": "^3.13.0"
+    "rss-parser": "^3.13.0",
+    "toad-scheduler": "^3.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
