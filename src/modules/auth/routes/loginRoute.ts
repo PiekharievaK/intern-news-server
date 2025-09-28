@@ -3,7 +3,7 @@ import { loginController } from "../utils/login";
 import type { LoginBody } from "../types/auth";
 import { schema } from "../schemas/login.schema";
 
-export default async function loginRoute(fastify: FastifyInstance) {
+export async function loginRoute(fastify: FastifyInstance) {
 	fastify.post(
 		"/login",
 		{ schema },

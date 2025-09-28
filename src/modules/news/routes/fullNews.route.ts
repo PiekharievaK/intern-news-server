@@ -3,7 +3,7 @@ import { schema } from "../schemas/fullNews.schema";
 import type { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
 import { newsController } from "../utils/news.controller";
 
-export default async function getFullNewsRoute(fastify: FastifyInstance) {
+export async function getFullNewsRoute(fastify: FastifyInstance) {
 	const route = fastify.withTypeProvider<JsonSchemaToTsProvider>();
 
 	route.get("/:id", { schema }, async (request, reply) =>
