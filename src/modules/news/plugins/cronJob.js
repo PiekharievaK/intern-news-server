@@ -29,7 +29,7 @@ export default fp(
 
 		fastify.ready().then(() => {
 			fastify.scheduler.addSimpleIntervalJob(job);
-			console.log("News update task scheduled every minute");
+			console.log("News update task scheduled every 5 hours");
 		});
 
 		fastify.pluginLoaded(pluginName);

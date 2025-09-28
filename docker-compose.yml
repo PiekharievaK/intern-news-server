@@ -1,16 +1,17 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    command: ["mongod", "--replSet", "rs0"]
-    volumes:
-      - mongo-data:/data/db
-      - ./mongo-init:/docker-entrypoint-initdb.d
-    restart: unless-stopped
+  news-server:
+    build:
+      context: . 
+      dockerfile: Dockerfile  
+    container_name: news  
+      - "3000:3000" 
+    environment:
 
-volumes:
-  mongo-data:
+      - NODE_ENV=production
+    volumes:
+      - ./.env:/app/.env 
+      - ./build:/app/build  
+    restart: unless-stopped 
+

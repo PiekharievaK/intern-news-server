@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"tsc -w\" \"nodemon\"",
     "build": "tsc",
-    "start:dev": "docker-compose up -d mongodb &&  npm run dev",
+    "start:dev": "docker-compose up &&  npm run dev",
     "lint": "biome lint",
     "format": "biome format --write",
     "check": "biome format"
