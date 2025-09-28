@@ -3,7 +3,7 @@ import { signupController } from "../utils/signup";
 import type { SignupBody } from "../types/auth";
 import { schema } from "../schemas/signup.schema";
 
-export default async function signupRoute(fastify: FastifyInstance) {
+export async function signupRoute(fastify: FastifyInstance) {
 	fastify.post(
 		"/signup",
 		{ schema },

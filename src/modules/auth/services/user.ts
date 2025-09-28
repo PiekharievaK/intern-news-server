@@ -1,4 +1,4 @@
-import type { PrismaClient, User } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client";
 import { hashPassword } from "./password";
 
 export const createUser = async (
@@ -27,16 +27,5 @@ export const findUserByEmail = async (prisma: PrismaClient, email: string) => {
 export const findUserByLogin = async (prisma: PrismaClient, login: string) => {
 	return prisma.user.findUnique({
 		where: { login },
-	});
-};
-
-export const updateUser = async (
-	prisma: PrismaClient,
-	id: string,
-	data: Partial<User>,
-) => {
-	await prisma.user.update({
-		where: { id: id },
-		data: data,
 	});
 };

@@ -1,14 +1,15 @@
 # === Build Stage ===
-FROM node:20-alpine
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json package-lock.json /mongo-init/init.js ./
+COPY package.json package-lock.json ./
 RUN npm install --frozen-lockfile
 
 COPY . .
 
-RUN npx prisma generate --schema=./src/prisma/schema.prisma
+RUN npx prisma generate --schema=./prisma/schema.prisma
+
 RUN npm run build
 
 
@@ -23,7 +24,7 @@ COPY --from=builder /app/package.json /app/package-lock.json ./
 RUN npm install --production --frozen-lockfile
 
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/src/prisma/generated ./src/prisma/generated
+COPY --from=builder /app/node_modules/.prisma/client /app/node_modules/.prisma/client
 
 EXPOSE 3000
 
