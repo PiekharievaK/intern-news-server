@@ -10,10 +10,10 @@ async function start() {
 
 	fastify.listen({ port, host }, (err, address) => {
 		if (err) {
-			console.log(err);
+			fastify.log.error(err);
 			process.exit(1);
 		}
-		console.log(`Server running at ${address}`);
+		fastify.log.info(`Server running at ${address}`);
 	});
 }
 

@@ -1,5 +1,6 @@
 import fastifySchedule from "@fastify/schedule";
 import fp from "fastify-plugin";
+import { getFeedHandler } from "../utils/feed.controller";
 const { SimpleIntervalJob, AsyncTask } = require("toad-scheduler");
 
 const pluginName = "cron-plugin";
@@ -9,17 +10,15 @@ export default fp(
 		const task = new AsyncTask(
 			"update-news",
 			async () => {
-				const url = `${fastify.config.SERVER_URL}/news?force=1`;
-				console.log(url);
 				try {
-					const response = await fetch(url);
-					console.log("News updated:", response.ok);
+					await getFeedHandler(fastify, { query: { force: 1 } });
+					fastify.log.info("News updated:");
 				} catch (error) {
-					console.error("Error fetching news:", error);
+					fastify.log.error(error, "Error fetching news:");
 				}
 			},
 			(err) => {
-				console.error("Task failed:", err);
+				fastify.log.error(err, "Task failed:");
 			},
 		);
 
@@ -29,7 +28,7 @@ export default fp(
 
 		fastify.ready().then(() => {
 			fastify.scheduler.addSimpleIntervalJob(job);
-			console.log("News update task scheduled every 5 hours");
+			fastify.log.info("News update task scheduled every 5 hours");
 		});
 
 		fastify.pluginLoaded(pluginName);

@@ -17,7 +17,7 @@ export const getFeedHandler = async (
 			});
 
 			if (cachedPreviews.length > 0) {
-				return reply.send(cachedPreviews);
+				return reply?.send(cachedPreviews);
 			}
 		}
 
@@ -43,14 +43,14 @@ export const getFeedHandler = async (
 				},
 			});
 		}
-
+		fastify.log.info("Fetch news success");
 		const allPreviews = await fastify.prisma.newsPreview.findMany({
 			where: { sourceUrl: url },
 		});
 
-		return reply.send(allPreviews);
+		return reply?.send(allPreviews);
 	} catch (error) {
 		fastify.log.error(error);
-		return reply.internalServerError("Failed to fetch or save feed");
+		return reply?.internalServerError("Failed to fetch or save feed");
 	}
 };
