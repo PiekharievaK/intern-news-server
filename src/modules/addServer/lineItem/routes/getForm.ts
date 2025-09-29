@@ -4,7 +4,7 @@ import { formController } from "../utils/formController";
 export const formRoute = (fastify: FastifyInstance) =>{
   fastify.get(
     "/form",
-    { preValidation: [fastify.authenticate] },
+    // { preValidation: [fastify.authenticate] },
     async (request: FastifyRequest, reply: FastifyReply) => {
       await formController(fastify, request, reply);
     }
