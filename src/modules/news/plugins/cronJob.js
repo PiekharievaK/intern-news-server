@@ -1,7 +1,7 @@
 import fastifySchedule from "@fastify/schedule";
 import fp from "fastify-plugin";
 import { getFeedHandler } from "../utils/feed.controller";
-const { SimpleIntervalJob, AsyncTask } = require("toad-scheduler");
+import { SimpleIntervalJob, AsyncTask } from "toad-scheduler";
 
 const pluginName = "cron-plugin";
 

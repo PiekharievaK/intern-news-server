@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Line Item</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <template id="form-template">
+    <form id="line-item-form" action="/addServer/save" method="POST" enctype="multipart/form-data"
+          class="bg-white p-8 rounded shadow-md w-full max-w-md space-y-4">
+
+      <h1 class="text-2xl font-bold text-center">Create Line Item</h1>
+<div>
+  <label class="block font-medium">Size:</label>
+  <div class="flex space-x-4 mt-1">
+    <input name="width" type="number" min="1" placeholder="Width" 
+           class="w-1/2 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    <input name="height" type="number" min="1" placeholder="Height" 
+           class="w-1/2 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+  </div>
+</div>
+      <div>
+        <label class="block font-medium">Min CPM:</label>
+        <input name="minCPM" id="minCPM" type="number" min="0" step="0.01" 
+               class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+
+      <div>
+        <label class="block font-medium">Max CPM:</label>
+        <input name="maxCPM" id="maxCPM" type="number" min="0" step="0.01" 
+               class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+
+      <div>
+        <label class="block font-medium">Geo:</label>
+        <input name="geo" type="text"
+               class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+
+      <div>
+        <label class="block font-medium">Type:</label>
+        <p>Banner</p>
+      </div>
+
+      <div>
+        <label class="block font-medium">Frequency of impressions:</label>
+        <input name="frequency" type="number"  
+               class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+
+      <div>
+        <label class="block font-medium">Creative:</label>
+        <input name="creative" type="file" 
+               class="w-full border rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+
+      <div class="text-center">
+        <button type="submit"
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+          Create Line Item
+        </button>
+      </div>
+    </form>
+  </template>
+
+<script>
+  const template = document.getElementById('form-template');
+  document.body.appendChild(template.content.cloneNode(true));
+
+  const form = document.getElementById('line-item-form');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const min = parseFloat(form.minCPM.value);
+    const max = parseFloat(form.maxCPM.value);
+
+    if (min > max) {
+      alert('Min CPM cannot be greater than Max CPM.');
+      form.minCPM.classList.add('border-red-500');
+      form.maxCPM.classList.add('border-red-500');
+      return;
+    } else {
+      form.minCPM.classList.remove('border-red-500');
+      form.maxCPM.classList.remove('border-red-500');
+    }
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        alert(`Error: ${error.error || 'Something went wrong'}`);
+        return;
+      }
+
+      const result = await response.json();
+      alert('Successfully created!');
+
+      form.reset();
+    } catch (err) {
+      console.error(err, 'Error submitting form:');
+      alert('An error occurred while submitting the form');
+    }
+  });
+</script>
+
+</body>
+</html>
