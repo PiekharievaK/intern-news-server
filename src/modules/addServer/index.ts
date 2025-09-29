@@ -1,14 +1,11 @@
-import {
-	FastifyInstance,
-	RawServerDefault,
-	FastifyBaseLogger,
-	FastifyTypeProviderDefault,
-} from "fastify";
+import { FastifyInstance } from "fastify";
+import { adAdapterRoutes } from "./adapter/routes/adapterRoute";
 import { formRoute } from "./lineItem/routes/getForm";
-import { saveLineItem } from "./lineItem/routes/saveForm";
+import { saveLineItemRoute } from "./lineItem/routes/saveForm";
 
 export default async function addServer(fastify: FastifyInstance) {
-	formRoute(fastify);
-	saveLineItem(fastify);
-	fastify.pluginLoaded("Line-Item");
+  adAdapterRoutes(fastify);
+  formRoute(fastify);
+  saveLineItemRoute(fastify);
+  fastify.pluginLoaded("addServer");
 }

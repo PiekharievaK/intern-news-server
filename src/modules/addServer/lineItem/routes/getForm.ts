@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { formController } from "../utils/formController";
 
-export async function formRoute(fastify: FastifyInstance) {
+export const formRoute = (fastify: FastifyInstance) =>{
   fastify.get(
     "/form",
     { preValidation: [fastify.authenticate] },
