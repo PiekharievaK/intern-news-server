@@ -3,8 +3,8 @@ import path from "path";
 import fs from "fs/promises";
 
 export const formController = async (
-	fastify: FastifyInstance,
-	request: FastifyRequest,
+	_fastify: FastifyInstance,
+	_request: FastifyRequest,
 	reply: FastifyReply,
 ) => {
 	const htmlPath = path.join(process.cwd(), "pages/formPage.html");
