@@ -46,6 +46,7 @@ export async function flushCache(fastify: FastifyInstance) {
 				auctionId: details.auctionId,
 				bidderCode: details.bidderCode,
 				creativeId: details.creativeId,
+				cpm: details.cpm,
 			};
 		} else if (eventType === "bidRequested") {
 			return {
