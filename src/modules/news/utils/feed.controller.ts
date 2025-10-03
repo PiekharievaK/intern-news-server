@@ -6,9 +6,17 @@ export const getFeedHandler = async (
 	request: FastifyRequest,
 	reply: FastifyReply,
 ) => {
-	const query = request.query as { url?: string; force?: string };
+	const query = request.query as {
+		url?: string;
+		force?: string;
+		page?: string;
+	};
 	const url = query.url ?? fastify.config.DEFAULT_FEED_URL;
 	const force = query.force === "1";
+	const page = Number(query.page) || 1;
+	const itemsPerPage = 5;
+
+	console.log("Request params:", request.params);
 
 	try {
 		if (!force) {
@@ -17,7 +25,14 @@ export const getFeedHandler = async (
 			});
 
 			if (cachedPreviews.length > 0) {
-				return reply?.send(cachedPreviews);
+				const start = (page - 1) * itemsPerPage;
+				const end = start + itemsPerPage;
+				const pagedCache = cachedPreviews.slice(start, end);
+
+				return reply.send({
+					items: pagedCache,
+					totalCount: cachedPreviews.length,
+				});
 			}
 		}
 
@@ -43,14 +58,20 @@ export const getFeedHandler = async (
 				},
 			});
 		}
+
 		fastify.log.info("Fetch news success");
+
 		const allPreviews = await fastify.prisma.newsPreview.findMany({
 			where: { sourceUrl: url },
 		});
 
-		return reply?.send(allPreviews);
+		const start = 0;
+		const end = start + itemsPerPage;
+		const allByPage = allPreviews.slice(start, end);
+
+		return reply.send({ items: allByPage, totalCount: allPreviews.length });
 	} catch (error) {
 		fastify.log.error(error);
-		return reply?.internalServerError("Failed to fetch or save feed");
+		return reply.internalServerError("Failed to fetch or save feed");
 	}
 };

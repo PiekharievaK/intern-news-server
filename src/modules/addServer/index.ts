@@ -4,8 +4,8 @@ import { formRoute } from "./lineItem/routes/getForm";
 import { saveLineItemRoute } from "./lineItem/routes/saveForm";
 
 export default async function addServer(fastify: FastifyInstance) {
-  adAdapterRoutes(fastify);
-  formRoute(fastify);
-  saveLineItemRoute(fastify);
-  fastify.pluginLoaded("addServer");
+	adAdapterRoutes(fastify);
+	formRoute(fastify);
+	saveLineItemRoute(fastify);
+	fastify.pluginLoaded("addServer");
 }

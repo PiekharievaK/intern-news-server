@@ -6,25 +6,34 @@ export const schema = {
 		properties: {
 			url: { type: "string", format: "uri" },
 			force: { type: "string" },
+			page: { type: "string" },
 		},
 		additionalProperties: false,
 	},
 	response: {
 		200: {
-			type: "array",
-			items: {
-				type: "object",
-				properties: {
-					id: { type: "string" },
-					title: { type: "string" },
-					image: { type: "string" },
-					sourceUrl: { type: "string" },
-					newsUrl: { type: "string" },
-					content: { type: "string" },
+			type: "object",
+			properties: {
+				items: {
+					type: "array",
+					items: {
+						type: "object",
+						properties: {
+							id: { type: "string" },
+							title: { type: "string" },
+							image: { type: "string" },
+							sourceUrl: { type: "string", format: "uri" },
+							newsUrl: { type: "string", format: "uri" },
+							content: { type: "string" },
+						},
+						required: ["id", "title", "sourceUrl", "newsUrl", "content"],
+						additionalProperties: false,
+					},
 				},
-				required: ["id", "title", "sourceUrl", "newsUrl", "content"],
-				additionalProperties: false,
+				totalCount: { type: "number" },
 			},
+			required: ["items", "totalCount"],
+			additionalProperties: false,
 		},
 		400: errorSchema,
 		500: errorSchema,
