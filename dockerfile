@@ -13,7 +13,6 @@ RUN npx prisma generate --schema=./prisma/schema.prisma
 
 RUN npm run build
 
-RUN npx prisma db push
 
 # === Production Stage ===
 FROM node:20-alpine
