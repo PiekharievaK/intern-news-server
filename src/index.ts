@@ -1,9 +1,7 @@
 import buildApp from "./app";
 
 async function start() {
-	const fastify = await buildApp({
-		logger: true,
-	});
+	const fastify = await buildApp();
 
 	const port = fastify.config.PORT;
 	const host = fastify.config.HOST;

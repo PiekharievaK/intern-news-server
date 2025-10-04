@@ -27,7 +27,7 @@ export async function loginController(
 			data: { token },
 		});
 
-		return reply.send({ login: user.login, token: token });
+		return reply.status(200).send({ login: user.login, token: token });
 	} catch (error) {
 		request.log.error(error);
 

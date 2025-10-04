@@ -12,7 +12,7 @@ const clickhousePlugin: FastifyPluginAsync = async (fastify) => {
 		query: "SELECT 1",
 		format: "JSONEachRow",
 	});
-	console.log("Result: ", await rows.json());
+	fastify.log.info(`Connected: ${!!rows}`);
 
 	fastify.decorate("clickhouse", clickhouse);
 };

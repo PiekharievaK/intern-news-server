@@ -16,7 +16,7 @@ export const getFeedHandler = async (
 	const page = Number(query.page) || 1;
 	const itemsPerPage = 5;
 
-	console.log("Request params:", request.params);
+	fastify.log.info(`Request params: ${request.params}`);
 
 	try {
 		if (!force) {
@@ -29,7 +29,7 @@ export const getFeedHandler = async (
 				const end = start + itemsPerPage;
 				const pagedCache = cachedPreviews.slice(start, end);
 
-				return reply.send({
+				return reply.status(200).send({
 					items: pagedCache,
 					totalCount: cachedPreviews.length,
 				});
@@ -69,7 +69,7 @@ export const getFeedHandler = async (
 		const end = start + itemsPerPage;
 		const allByPage = allPreviews.slice(start, end);
 
-		return reply.send({ items: allByPage, totalCount: allPreviews.length });
+		return reply.status(200).send({ items: allByPage, totalCount: allPreviews.length });
 	} catch (error) {
 		fastify.log.error(error);
 		return reply.internalServerError("Failed to fetch or save feed");

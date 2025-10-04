@@ -15,7 +15,7 @@ export async function logoutController(
 			data: { token: null },
 		});
 
-		return reply.send({ message: "Logged out successfully" });
+		return reply.status(200).send({ message: "Logged out successfully" });
 	} catch (error) {
 		request.log.error(error);
 

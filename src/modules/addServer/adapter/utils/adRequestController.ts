@@ -10,7 +10,7 @@ export const adRequestController = async (
 
 	const bids = request.body?.bids;
 	if (!Array.isArray(bids) || bids.length === 0) {
-		return reply.status(400).send({ error: "No bids provided" });
+		return reply.badRequest("No bids provided");
 	}
 
 	const responses = [];
@@ -45,7 +45,7 @@ export const adRequestController = async (
 		});
 	}
 
-	return reply.send({ body: { bids: responses } });
+	return reply.status(200).send({ body: { bids: responses } });
 };
 
 function parseSizes(sizes: (string | number)[]): [number, number] | null {

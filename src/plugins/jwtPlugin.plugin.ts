@@ -19,7 +19,7 @@ export default fp(async (fastify, _opts) => {
 			try {
 				await request.jwtVerify();
 			} catch (err) {
-				reply.send(err);
+				reply.unauthorized(err);
 			}
 		},
 	);

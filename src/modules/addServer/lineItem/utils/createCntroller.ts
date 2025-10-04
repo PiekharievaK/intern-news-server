@@ -13,7 +13,8 @@ export const createLineItemController = async (
 	const file = await request.file();
 
 	if (!file) {
-		return reply.status(400).send({ error: "File is required" });
+		return reply.badRequest("File is required");
+
 	}
 
 	const fields = file.fields as Record<string, any>;
@@ -33,7 +34,7 @@ export const createLineItemController = async (
 		!geoField?.value?.trim() ||
 		!frequencyField?.value?.trim()
 	) {
-		return reply.status(400).send({ error: "All fields are required" });
+		return reply.badRequest("All fields are required");
 	}
 
 	const width = parseInt(widthField.value, 10);
@@ -55,7 +56,7 @@ export const createLineItemController = async (
 		Number.isNaN(frequency) ||
 		frequency < 0
 	) {
-		return reply.status(400).send({ error: "Invalid numeric form data" });
+		return reply.badRequest("Invalid numeric form data");
 	}
 
 	const uploadDir = path.join(process.cwd(), "uploads");

@@ -13,12 +13,12 @@ export const adStatsController = (
 	}>;
 
 	if (!Array.isArray(events)) {
-		return reply.code(400).send({ error: "Invalid payload" });
+		return reply.badRequest("Invalid payload");
 	}
 
 	for (const event of events) {
 		addToCache(event, fastify);
 	}
 
-	return reply.code(200).send({ status: "ok" });
+	return reply.status(200).send({ status: "ok" });
 };

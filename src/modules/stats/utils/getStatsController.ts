@@ -56,7 +56,7 @@ export const getStatsController = async (
 			const csv = parser.parse(expandedData);
 			reply.header("Content-Type", "text/csv");
 			reply.header("Content-Disposition", 'attachment; filename="stats.csv"');
-			return reply.send(csv);
+			return reply.status(200).send(csv);
 		}
 
 		if (format === "excel") {
@@ -78,15 +78,15 @@ export const getStatsController = async (
 				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 			);
 			reply.header("Content-Disposition", 'attachment; filename="stats.xlsx"');
-			return reply.send(buffer);
+			return reply.status(200).send(buffer);
 		}
 
-		return reply.send({
+		return reply.status(200).send({
 			data: expandedData,
 			totalRecords,
 		});
 	} catch (error) {
 		fastify.log.error("Error while fetching count or data:", error);
-		return reply.status(500).send({ error: "Internal Server Error" });
+		return reply.internalServerError();
 	}
 };
