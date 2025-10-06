@@ -19,7 +19,7 @@ export async function loginController(
 
 		const token = fastify.jwt.sign(
 			{ userId: user.id, email: user.email },
-			{ expiresIn: "1h" },
+			{ expiresIn: "24h" },
 		);
 
 		await fastify.prisma.user.update({
@@ -27,7 +27,16 @@ export async function loginController(
 			data: { token },
 		});
 
-		return reply.status(200).send({ login: user.login, token: token });
+		reply
+			.setCookie("token", token, {
+				httpOnly: true,
+				secure: false,
+				sameSite: "lax",
+				path: "/",
+				maxAge: 3600,
+			})
+			.status(200)
+			.send({ login: user.login });
 	} catch (error) {
 		request.log.error(error);
 

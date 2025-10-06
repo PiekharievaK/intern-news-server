@@ -6,7 +6,17 @@ const corsPlugin: FastifyPluginAsync = fp(async (fastify, _opts) => {
 	const pluginName = "cors-plugin";
 
 	await fastify.register(cors, {
-			origin: "*", 
+		origin: (origin, cb) => {
+			const allowedOrigins = [
+				"http://localhost:5173",
+				"intern-news.vercel.app",
+			];
+			if (!origin || allowedOrigins.includes(origin)) {
+				cb(null, true);
+			} else {
+				cb(new Error("Not allowed by CORS"), false);
+			}
+		},
 		credentials: true,
 	});
 

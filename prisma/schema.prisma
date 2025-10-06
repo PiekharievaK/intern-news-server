@@ -16,6 +16,7 @@ model  NewsPreview {
   newsUrl     String   @unique
   sourceUrl   String
   content     String
+  pubDate     DateTime?
   updatedAt   DateTime @updatedAt
 }
 

@@ -14,7 +14,6 @@ export const createLineItemController = async (
 
 	if (!file) {
 		return reply.badRequest("File is required");
-
 	}
 
 	const fields = file.fields as Record<string, any>;

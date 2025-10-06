@@ -1,23 +1,28 @@
-import fp from "fastify-plugin";
 import { createClient } from "@clickhouse/client";
-import type { FastifyPluginAsync } from "fastify";
+import fp from "fastify-plugin";
 
-const clickhousePlugin: FastifyPluginAsync = async (fastify) => {
+export default fp(async (fastify, _opts) => {
+	const pluginName = "clickhouse-plugin";
+
 	const clickhouse = createClient({
 		url: fastify.config.CLICK_URL,
 		username: fastify.config.CLICK_USER,
 		password: fastify.config.CLICK_PASSWORD,
 	});
-	const rows = await clickhouse.query({
-		query: "SELECT 1",
-		format: "JSONEachRow",
-	});
-	fastify.log.info(`Connected: ${!!rows}`);
 
-	fastify.decorate("clickhouse", clickhouse);
-};
+	try {
+		const rows = await clickhouse.query({
+			query: "SELECT 1",
+			format: "JSONEachRow",
+		});
 
-export default fp(clickhousePlugin);
+		fastify.pluginLoaded(pluginName);
+		fastify.decorate("clickhouse", clickhouse);
+	} catch (error) {
+		fastify.log.error("Error connecting to ClickHouse", error);
+		throw new Error("ClickHouse connection failed");
+	}
+});
 
 declare module "fastify" {
 	interface FastifyInstance {

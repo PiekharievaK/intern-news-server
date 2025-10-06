@@ -25,6 +25,7 @@ export const schema = {
 							sourceUrl: { type: "string", format: "uri" },
 							newsUrl: { type: "string", format: "uri" },
 							content: { type: "string" },
+							pubDate: { type: "string", format: "DateTime" },
 						},
 						required: ["id", "title", "sourceUrl", "newsUrl", "content"],
 						additionalProperties: false,

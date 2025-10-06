@@ -15,10 +15,13 @@ export async function logoutController(
 			data: { token: null },
 		});
 
+		reply.clearCookie("token", {
+			path: "/",
+		});
+
 		return reply.status(200).send({ message: "Logged out successfully" });
 	} catch (error) {
 		request.log.error(error);
-
 		return reply.internalServerError(error.message || "Internal Server Error");
 	}
 }
