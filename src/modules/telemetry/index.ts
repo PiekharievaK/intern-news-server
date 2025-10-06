@@ -31,8 +31,14 @@ const pinoLogger: DiagLogger = {
 };
 
 export async function initOpenTelemetry() {
-	diag.setLogger(pinoLogger, DiagLogLevel.INFO);
+	const isProd = process.env.NODE_ENV === "production";
 
+	if (!isProd) {
+		logger.info("OpenTelemetry is disabled in non-production environment");
+		return;
+	}
+
+	diag.setLogger(pinoLogger, DiagLogLevel.INFO);
 	const sdk = new NodeSDK({
 		traceExporter: new ConsoleSpanExporter(),
 		metricReader: new PeriodicExportingMetricReader({

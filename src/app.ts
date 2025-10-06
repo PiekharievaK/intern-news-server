@@ -48,7 +48,7 @@ async function buildApp(options: AppOptions = {}) {
 
 	fastify.addHook("onClose", async () => {
 		try {
-			await sdk.shutdown();
+			await sdk?.shutdown();
 			fastify.log.info("OpenTelemetry SDK has been shut down");
 		} catch (err) {
 			fastify.log.error(err, "Error shutting down OpenTelemetry SDK:");
