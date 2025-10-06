@@ -11,15 +11,16 @@ export default fp(async (fastify, _opts) => {
 	});
 
 	try {
-		const rows = await clickhouse.query({
+		await clickhouse.query({
 			query: "SELECT 1",
 			format: "JSONEachRow",
 		});
 
 		fastify.pluginLoaded(pluginName);
 		fastify.decorate("clickhouse", clickhouse);
+		fastify.log.info("Successfully connected to ClickHouse");
 	} catch (error) {
-		fastify.log.error("Error connecting to ClickHouse", error);
+		fastify.log.error(error, "Error connecting to ClickHouse:");
 		throw new Error("ClickHouse connection failed");
 	}
 });

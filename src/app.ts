@@ -2,10 +2,12 @@ import { join } from "node:path";
 import AutoLoad from "@fastify/autoload";
 import Fastify, { type FastifyServerOptions } from "fastify";
 import configPlugin from "./config";
+import { initOpenTelemetry } from "./modules/telemetry";
 
 export type AppOptions = Partial<FastifyServerOptions>;
-
 async function buildApp(options: AppOptions = {}) {
+	const sdk = await initOpenTelemetry();
+
 	const fastify = Fastify({ logger: true });
 	await fastify.register(configPlugin);
 
@@ -43,6 +45,15 @@ async function buildApp(options: AppOptions = {}) {
 		fastify.log.error("Error in autoload:", error);
 		throw error;
 	}
+
+	fastify.addHook("onClose", async () => {
+		try {
+			await sdk.shutdown();
+			fastify.log.info("OpenTelemetry SDK has been shut down");
+		} catch (err) {
+			fastify.log.error(err, "Error shutting down OpenTelemetry SDK:");
+		}
+	});
 
 	await fastify.ready();
 
