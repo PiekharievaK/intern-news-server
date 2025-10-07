@@ -9,6 +9,10 @@ export const EnvSchema = {
 		DATABASE_URL: { type: "string" },
 		JWT_SECRET: { type: "string" },
 		SERVER_URL: { type: "string" },
+		CLICK_USER: { type: "string" },
+		CLICK_URL: { type: "string" },
+		CLICK_PASSWORD: { type: "string" },
+		CLICK_TABLE: { type: "string" },
 	},
 	required: [
 		"PORT",
@@ -17,6 +21,10 @@ export const EnvSchema = {
 		"DATABASE_URL",
 		"JWT_SECRET",
 		"SERVER_URL",
+		"CLICK_USER",
+		"CLICK_URL",
+		"CLICK_PASSWORD",
+		"CLICK_TABLE",
 	],
 	additionalProperties: false,
 } as const;

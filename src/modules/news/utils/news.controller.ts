@@ -20,10 +20,10 @@ export const newsController = async (
 		const parsed = await parsePage(preview.newsUrl, preview.sourceUrl);
 
 		if (!parsed) {
-			return reply.status(400).send({ error: "Unable to parse the news page" });
+			return reply.badRequest("Unable to parse the news page");
 		}
 
-		return reply.send({
+		return reply.status(200).send({
 			id,
 			title: parsed.title,
 			image: parsed.image ?? "",

@@ -64,3 +64,4 @@ dist/
 *.swo
 
 /src/generated/prisma
+clickhouse_data/

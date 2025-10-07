@@ -16,6 +16,7 @@ model  NewsPreview {
   newsUrl     String   @unique
   sourceUrl   String
   content     String
+  pubDate     DateTime?
   updatedAt   DateTime @updatedAt
 }
 
@@ -39,4 +40,16 @@ model User {
   token     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model LineItem {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  size             Int[]
+  minCPM           Float
+  maxCPM           Float
+  geo              String
+  adType           String
+  frequency        Int
+  creativePath     String
+  createdAt        DateTime @default(now())
 }

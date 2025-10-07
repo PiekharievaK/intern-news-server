@@ -6,9 +6,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --frozen-lockfile
 
+COPY prisma ./prisma
 COPY . .
 
-RUN npx prisma generate --schema=./prisma/schema.prisma
+RUN npx prisma generate --schema=./prisma/schema.prisma 
 
 RUN npm run build
 
@@ -24,8 +25,8 @@ COPY --from=builder /app/package.json /app/package-lock.json ./
 RUN npm install --production --frozen-lockfile
 
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/node_modules/.prisma/client /app/node_modules/.prisma/client
+COPY --from=builder /app/node_modules/.prisma/client ./node_modules/.prisma/client
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD ["node", "build/index.js"]

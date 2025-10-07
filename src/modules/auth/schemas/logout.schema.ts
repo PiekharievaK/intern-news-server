@@ -1,13 +1,6 @@
 import { errorSchema } from "../../../types/errorSchema";
 
 export const schema = {
-	headers: {
-		type: "object",
-		required: ["authorization"],
-		properties: {
-			authorization: { type: "string" },
-		},
-	},
 	response: {
 		200: {
 			type: "object",

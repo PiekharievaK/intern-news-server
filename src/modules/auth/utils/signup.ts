@@ -17,7 +17,7 @@ export async function signupController(
 		fastify.assert(!existingUserByLogin, 400, "Login already taken");
 		const user = await createUser(fastify.prisma, email, login, password);
 
-		return reply.send({ id: user.id, login: user.login });
+		return reply.status(201).send({ id: user.id, login: user.login });
 	} catch (error) {
 		request.log.error(error);
 
