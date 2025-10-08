@@ -1,6 +1,7 @@
 import { errorSchema } from "../../../types/errorSchema";
 
 export const schema = {
+	request: {token: "string"},
 	response: {
 		200: {
 			type: "object",

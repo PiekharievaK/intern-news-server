@@ -14,6 +14,7 @@ export const schema = {
 			type: "object",
 			properties: {
 				login: { type: "string" },
+				token: {type: "string"}
 			},
 			required: ["login"],
 			additionalProperties: false,
