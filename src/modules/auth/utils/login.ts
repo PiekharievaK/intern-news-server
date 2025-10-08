@@ -28,15 +28,15 @@ export async function loginController(
 		});
 
 		reply
-			.setCookie("token", token, {
-				httpOnly: true,
-				secure: false,
-				sameSite: "lax",
-				path: "/",
-				maxAge: 3600,
-			})
+			// .setCookie("token", token, {
+			// 	httpOnly: true,
+			// 	secure: false,
+			// 	sameSite: "lax",
+			// 	path: "/",
+			// 	maxAge: 3600,
+			// })
 			.status(200)
-			.send({ login: user.login });
+			.send({ login: user.login, token: token });
 	} catch (error) {
 		request.log.error(error);
 
