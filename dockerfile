@@ -25,6 +25,7 @@ COPY --from=builder /app/package.json /app/package-lock.json ./
 RUN npm install --production --frozen-lockfile
 
 COPY --from=builder /app/build ./build
+COPY --from=builder /app/pages ./pages
 COPY --from=builder /app/node_modules/.prisma/client ./node_modules/.prisma/client
 
 EXPOSE 3001
