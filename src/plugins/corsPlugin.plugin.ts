@@ -9,8 +9,11 @@ const corsPlugin: FastifyPluginAsync = fp(async (fastify, _opts) => {
 		origin: (origin, cb) => {
 			const allowedOrigins = [
 				"http://localhost:5173",
-				"intern-news.vercel.app",
+				"http://localhost:3001",
+				"https://intern-news.vercel.app",
+				"https://intern-news-server-1.vercel.app"
 			];
+
 			if (!origin || allowedOrigins.includes(origin)) {
 				cb(null, true);
 			} else {
@@ -18,6 +21,8 @@ const corsPlugin: FastifyPluginAsync = fp(async (fastify, _opts) => {
 			}
 		},
 		credentials: true,
+		methods: ["GET", "POST", "OPTIONS"],
+		allowedHeaders: ["Content-Type", "Authorization"],
 	});
 
 	fastify.pluginLoaded(pluginName);

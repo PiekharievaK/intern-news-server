@@ -42,7 +42,11 @@ export const getStatsController = async (
 
 		const totalRecords = countData?.[0]?.total || 0;
 
-		const query = `SELECT * FROM ${fastify.config.CLICK_TABLE} ${whereClause} ORDER BY timestamp DESC LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`;
+		let query = `SELECT * FROM ${fastify.config.CLICK_TABLE} ${whereClause} ORDER BY timestamp DESC`;
+		if (format !== "csv" && format !== "excel") {
+			query += ` LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`;
+		}
+
 		const result = await fastify.clickhouse.query({
 			query,
 			format: "JSON",

@@ -12,14 +12,15 @@ export const adRequestSchema = {
 					type: "object",
 					required: ["requestId", "sizes"],
 					properties: {
-						requestId: { type: "string" },
-						aid: { type: "string" },
+						requestId: { type: "string", default: "34095ffg88" },
+						aid: { type: "string", default: "350975" },
 						sizes: {
 							type: "array",
 							minItems: 2,
 							maxItems: 2,
 							items: {
 								anyOf: [{ type: "string" }, { type: "number" }],
+								default: [300, 250],
 							},
 							description:
 								"Array of [width, height], each item can be string or number",
