@@ -5,8 +5,8 @@ export const schema = {
 		type: "object",
 		required: ["email", "password"],
 		properties: {
-			email: { type: "string", format: "email" },
-			password: { type: "string", minLength: 6 },
+			email: { type: "string", format: "email", default: "usertest@gmail.com" },
+			password: { type: "string", minLength: 6, default: "usertest@gmail.com" },
 		},
 	},
 	response: {

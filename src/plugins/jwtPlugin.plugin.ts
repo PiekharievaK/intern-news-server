@@ -43,9 +43,9 @@ export default fp(async (fastify, _opts) => {
 					}
 
 					reply.clearCookie("token", {
-						path: "/",
 						httpOnly: true,
-						sameSite: "lax",
+						sameSite: "none",
+						path: "/",
 						secure: true,
 					});
 
